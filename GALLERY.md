@@ -45,6 +45,10 @@ Step 5: Visualization & Interpretation
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+## 📝 Note on Figures
+
+**The figure images need to be generated after installation.** The PNG files are not included in the repository to keep it lightweight. Follow the instructions below to generate them.
+
 ## Generating Figures
 
 To generate all example figures:
@@ -53,17 +57,58 @@ To generate all example figures:
 # Install the package with dependencies
 pip install -e .
 
-# Generate figures
+# Generate figures (takes ~30 seconds)
 python docs/generate_figures.py
 ```
 
-This will create PNG images in `docs/figures/` directory.
+This will create PNG images in `docs/figures/` directory. Once generated, the images below will display.
 
 ---
 
 ## Overview Figure
 
-![Overview](docs/figures/overview.png)
+**Location**: `docs/figures/overview.png` (generate first using script above)
+
+**If not yet generated**, here's what you'll see:
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│  Figure 1: Complete Pipeline Overview (6 panels)                   │
+├────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  (A) State 1        (B) State 2        (C) State 3                │
+│  ┌──────────┐      ┌──────────┐      ┌──────────┐                │
+│  │ ▓▒░  ░▒▓ │      │ ░▓▒  ▒▓░ │      │ ▒▓░  ░▓▒ │                │
+│  │ ▒▓░  ░▓▒ │      │ ▓░▒  ▒░▓ │      │ ▓░▒  ▒░▓ │                │
+│  │ ░▒▓▓▓▒░  │      │ ▒▓░░░▓▒  │      │ ░▓▒▒▒▓░  │                │
+│  └──────────┘      └──────────┘      └──────────┘                │
+│  Connectivity matrices showing different correlation patterns      │
+│                                                                     │
+│  (D) Wasserstein Distance Trajectory                              │
+│      ▲                                                             │
+│   W₂ │     ╱╲        ╱╲                                           │
+│      │    ╱  ╲      ╱  ╲      ╱╲                                  │
+│      │   ╱    ╲    ╱    ╲    ╱  ╲                                 │
+│      │  ╱      ╲  ╱      ╲  ╱    ╲                                │
+│      │_╱________╲╱________╲╱______╲______► Time                   │
+│         ↑        ↑        ↑                                        │
+│       Transition points detected as peaks                          │
+│                                                                     │
+│  (E) State Timeline                                               │
+│      State 0 ████████░░░░░░░░░░░░░░░░░░░░                        │
+│      State 1 ░░░░░░░░████████░░░░░░░░░░░░                        │
+│      State 2 ░░░░░░░░░░░░░░░░████████████                        │
+│                                                                     │
+│  (F) Distance Matrix (Block structure reveals recurring states)   │
+│      ┌────────────┐                                               │
+│      │ ▓▓░░░░░░░░ │  Dark blocks = similar states                │
+│      │ ▓▓░░░░░░░░ │  Light areas = different states              │
+│      │ ░░▓▓░░░░░░ │  Block pattern = 3 distinct network states   │
+│      │ ░░▓▓░░░░░░ │                                               │
+│      │ ░░░░▓▓░░░░ │                                               │
+│      └────────────┘                                               │
+└────────────────────────────────────────────────────────────────────┘
+```
 
 **Figure 1: Complete Pipeline Overview**
 - **(A-C)** Three network connectivity states showing different correlation patterns
@@ -79,7 +124,7 @@ This single figure demonstrates the complete workflow from connectivity estimati
 
 ### 1. Network Evolution Over Time
 
-![Connectivity Evolution](docs/figures/connectivity_evolution.png)
+**Location**: `docs/figures/connectivity_evolution.png` (generate using script)
 
 **Figure 2: Dynamic Connectivity Matrices**
 
@@ -91,7 +136,33 @@ Six snapshots of network connectivity at evenly-spaced time points. Colors repre
 
 ### 2. Wasserstein Distance Trajectory
 
-![Wasserstein Trajectory](docs/figures/wasserstein_trajectory.png)
+**Location**: `docs/figures/wasserstein_trajectory.png` (generate using script)
+
+**ASCII Preview**:
+```
+Wasserstein Distance Over Time
+    ▲
+  6 │                    ╱╲
+    │                   ╱  ╲
+  5 │                  ╱    ╲
+    │     ╱╲          ╱      ╲              ╱╲
+  4 │    ╱  ╲        ╱        ╲            ╱  ╲
+    │   ╱    ╲      ╱          ╲          ╱    ╲
+  3 │  ╱      ╲    ╱            ╲        ╱      ╲
+    │ ╱        ╲  ╱              ╲      ╱        ╲
+  2 │╱          ╲╱                ╲    ╱          ╲
+    │                              ╲  ╱            ╲
+  1 │                               ╲╱              ╲___
+    │
+  0 └─────────────────────────────────────────────────────► Time Window
+    0   5   10  15  20  25  30  35  40  45  50  55  60
+
+    ↑       ↑           ↑                   ↑
+  Detected state transitions (peaks in distance)
+
+  Orange line: Threshold (μ + 2σ)
+  Red lines: Detected transition times
+```
 
 **Figure 3: Network Evolution Quantified**
 
@@ -107,7 +178,30 @@ The Wasserstein distance between consecutive time windows quantifies how much th
 
 ### 3. State Segmentation Timeline
 
-![State Timeline](docs/figures/state_timeline.png)
+**Location**: `docs/figures/state_timeline.png` (generate using script)
+
+**ASCII Preview**:
+```
+Network State Timeline
+┌────────────────────────────────────────────────────────────────┐
+│ State                                                          │
+│   2  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░████████████████      │
+│   1  ░░░░░░░░░░░░████████████████░░░░░░░░░░░░░░░░░░░░░░      │
+│   0  ████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░      │
+│      │           │               │                    │        │
+│      └───────────┴───────────────┴────────────────────┘        │
+│          ↑               ↑                   ↑                 │
+│       Transition     Transition          Transition            │
+│                                                                 │
+│ Wasserstein Distance                                           │
+│   6 │                    ╱╲                         ╱╲         │
+│   4 │     ╱╲            ╱  ╲                       ╱  ╲        │
+│   2 │    ╱  ╲          ╱    ╲            ╱╲      ╱    ╲       │
+│   0 │___╱____╲________╱______╲__________╱__╲____╱______╲___   │
+│       0      10      20      30       40     50      60        │
+│                         Time Window                            │
+└────────────────────────────────────────────────────────────────┘
+```
 
 **Figure 4: Discrete Network States**
 
@@ -124,7 +218,29 @@ The Wasserstein distance between consecutive time windows quantifies how much th
 
 ### 4. Pairwise Distance Matrix
 
-![Distance Matrix](docs/figures/distance_matrix.png)
+**Location**: `docs/figures/distance_matrix.png` (generate using script)
+
+**ASCII Preview**:
+```
+Pairwise Wasserstein Distance Matrix
+     Time Window (j) →
+  T  ┌────────────────────────────────────────┐
+  i  │ ▓▓▓░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░   │  Dark (▓) = Low distance
+  m  │ ▓▓▓░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░   │  Light (░) = High distance
+  e  │ ▓▓▓░░░░░░░░░░░░░░▓▓▓░░░░░░░░░░░░░░░   │
+     │ ░░░▓▓▓▓▓░░░░░░░░░░░░░▓▓▓▓▓░░░░░░░░░   │  Block structure indicates
+  W  │ ░░░▓▓▓▓▓░░░░░░░░░░░░░▓▓▓▓▓░░░░░░░░░   │  3 distinct network states
+  i  │ ░░░▓▓▓▓▓░░░░░░░░░░░░░▓▓▓▓▓░░░░░░░░░   │
+  n  │ ░░░░░░░░▓▓▓▓░░░░░░░░░░░░░░▓▓▓▓░░░░░   │  Off-diagonal blocks show
+  d  │ ░░░░░░░░▓▓▓▓░░░░░░░░░░░░░░▓▓▓▓░░░░░   │  state recurrence
+  o  │ ░░░░░░░░▓▓▓▓░░░░░░░░░░░░░░▓▓▓▓░░░░░   │
+  w  │ ▓▓▓░░░░░░░░░▓▓▓▓▓░░░░░░░░░░░░░▓▓▓▓   │
+     │ ▓▓▓░░░░░░░░░▓▓▓▓▓░░░░░░░░░░░░░▓▓▓▓   │
+  (i)│ ░░░▓▓▓▓▓░░░░░░░░░▓▓▓▓░░░░░░░░░░░░░   │
+  ↓  └────────────────────────────────────────┘
+
+     State:  [─ State 0 ─][─ State 1 ─][─ State 2 ─][State 1]
+```
 
 **Figure 5: Temporal Structure Revealed**
 
@@ -140,7 +256,26 @@ Heatmap showing Wasserstein distances between all pairs of time windows:
 
 ### 5. Geodesic Path Between States
 
-![Geodesic Path](docs/figures/geodesic_path.png)
+**Location**: `docs/figures/geodesic_path.png` (generate using script)
+
+**ASCII Preview**:
+```
+Geodesic Interpolation on SPD Manifold
+
+t=0.00      t=0.14      t=0.29      t=0.43      t=0.57      t=0.71      t=0.86      t=1.00
+START                                                                                END
+┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐    ┌─────┐
+│▓░░▒▓│    │▓░▒░▓│    │▓▒░░▓│    │▓▒░▒▓│    │▓▒▒░▓│    │▓▒▒▓▓│    │▓▒▓▒▓│    │▓▓▒░▓│
+│░▓▒░░│    │░▓░▒░│    │▒▓░▒░│    │▒▓▒░▒│    │▒▓▒▒░│    │▒▓▓▒▒│    │▒▓▓▓▒│    │▒▓▓▓▒│
+│░▒▓░░│ →  │▒░▓░░│ →  │░▒▓░▒│ →  │░▒▓▒░│ →  │▒░▓▒▒│ →  │▒▒▓▓▒│ →  │▒▓▒▓▓│ →  │░▓░▓▓│
+│▒░░▓▓│    │░▒░▓▓│    │░░▒▓▓│    │▒░▒▓▓│    │░▒▒▓▓│    │▒▒▒▓▓│    │▒▒▓▓▓│    │░▒▓▓▓│
+│▓▓▓▓▒│    │▓▓▓▓▒│    │▓▓▓▓▒│    │▓▓▓▓▓│    │▓▓▓▓▓│    │▓▓▓▓▓│    │▓▓▓▓▓│    │▓▓▓▓▓│
+└─────┘    └─────┘    └─────┘    └─────┘    └─────┘    └─────┘    └─────┘    └─────┘
+ State 0                                                                        State 1
+
+Smooth transition along geodesic γ(t) = C₁^{1/2}(C₁^{-1/2} C₂ C₁^{-1/2})^t C₁^{1/2}
+All intermediate points are valid SPD correlation matrices
+```
 
 **Figure 6: Smooth Interpolation on SPD Manifold**
 
@@ -162,7 +297,41 @@ This respects the manifold structure and ensures all intermediate points are val
 
 ### 6. Manifold Embedding
 
-![Manifold Embedding](docs/figures/manifold_embedding.png)
+**Location**: `docs/figures/manifold_embedding.png` (generate using script)
+
+**ASCII Preview**:
+```
+2D Embedding of Network State Space (MDS)
+
+       MDS Dimension 2
+           ▲
+       4   │                    ○ State 0
+           │                    □ State 1
+       3   │     □□□             △ State 2
+           │    □ □□□            ★ Start/End
+       2   │   □   □□
+           │  □     □
+       1   │ □       □
+           │          □___
+       0   │  ○○○         □ ___△△△
+           │ ○○○○          □  △△△△
+      -1   │○○○○○           □△△△△△
+           │ ○○○             △△△△△
+      -2   │  ○○              △△△
+           │   ○               △△
+      -3   │    ★               △
+           │                     ★
+      -4   │
+           └────────────────────────────────► MDS Dimension 1
+          -4  -3  -2  -1   0   1   2   3   4
+
+Gray line: temporal trajectory through state space
+Green ★: Starting network configuration
+Red ★: Ending network configuration
+
+Network states cluster in distinct regions of the manifold
+Low-dimensional structure reveals intrinsic dynamics
+```
 
 **Figure 7: Network State Space Geometry**
 
